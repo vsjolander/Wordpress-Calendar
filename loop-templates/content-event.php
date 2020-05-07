@@ -10,52 +10,50 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<div class="col-12 col-md-6">
-    <div class="card mb-5 <?php echo join( ' ', get_post_class( $class, $post_id ) ); ?>" id="post-<?php the_ID(); ?>">
-        <a href="<?php echo esc_url( get_permalink( get_the_ID() ) );?>">
+<div class="card mb-5 <?php echo join( ' ', get_post_class( $class, $post_id ) ); ?>" id="post-<?php the_ID(); ?>">
+    <a href="<?php echo esc_url( get_permalink( get_the_ID() ) );?>">
+        <?php
+            if (get_the_post_thumbnail( $post->ID, 'large' )) :
+                echo get_the_post_thumbnail( $post->ID, 'large' );
+            else:
+        ?>
+            <img src="https://vosab.s3.amazonaws.com/rws/uploads/2020/03/rws-placeholder.jpg" alt="RWS Placeholder">
+        <?php endif; ?>
+    </a>
+
+    <div class="card-body">
+        <div class="entry-date"><?php echo trim(get_post_meta( get_the_ID(), 'vos-event-date', true)); ?></div>
+        <div class="entry-header mt-1 mb-3">
+
             <?php
-                if (get_the_post_thumbnail( $post->ID, 'large' )) :
-                    echo get_the_post_thumbnail( $post->ID, 'large' );
-                else:
+            the_title(
+                sprintf( '<div class="h4 entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ),
+                '</a></div>'
+            );
             ?>
-                <img src="https://vosab.s3.amazonaws.com/rws/uploads/2020/03/rws-placeholder.jpg" alt="RWS Placeholder">
-            <?php endif; ?>
-        </a>
 
-        <div class="card-body">
-            <div class="entry-date"><?php echo trim(get_post_meta( get_the_ID(), 'vos-event-date', true)); ?></div>
-            <div class="entry-header mt-1 mb-3">
+        </div><!-- .entry-header -->
 
-                <?php
-                the_title(
-                    sprintf( '<div class="h4 entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ),
-                    '</a></div>'
-                );
-                ?>
+        <div class="entry-content">
 
-            </div><!-- .entry-header -->
+            <?php the_excerpt(); ?>
 
-            <div class="entry-content">
+            <?php
+            wp_link_pages(
+                array(
+                    'before' => '<div class="page-links">' . __( 'Pages:', 'understrap' ),
+                    'after'  => '</div>',
+                )
+            );
+            ?>
 
-                <?php the_excerpt(); ?>
+        </div><!-- .entry-content -->
 
-                <?php
-                wp_link_pages(
-                    array(
-                        'before' => '<div class="page-links">' . __( 'Pages:', 'understrap' ),
-                        'after'  => '</div>',
-                    )
-                );
-                ?>
+        <footer class="entry-footer d-none">
 
-            </div><!-- .entry-content -->
+            <?php understrap_entry_footer(); ?>
 
-            <footer class="entry-footer d-none">
+        </footer><!-- .entry-footer -->
+    </div>
 
-                <?php understrap_entry_footer(); ?>
-
-            </footer><!-- .entry-footer -->
-        </div>
-
-    </div><!-- #post-## -->
-</div>
+</div><!-- #post-## -->

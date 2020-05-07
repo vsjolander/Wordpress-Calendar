@@ -27,7 +27,7 @@ $container = get_theme_mod('understrap_container_type');
         <div class="<?php echo esc_attr($container); ?>" id="content" tabindex="-1">
 
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 mb-4">
                     <header class="page-header">
                         <?php
                         echo '<h1 class="page-title">' . __('Kalender') . '</h1>';
@@ -38,29 +38,33 @@ $container = get_theme_mod('understrap_container_type');
 
             <div class="row">
 
-                <?php if (have_posts()) : ?>
+                <div class="col">
+                    <?php if (have_posts()) : ?>
 
-                    <?php /* Start the Loop */ ?>
-                    <?php while (have_posts()) : the_post(); ?>
+                        <div class="grid grid--two-column">
+                            <?php /* Start the Loop */ ?>
+                            <?php while (have_posts()) : the_post(); ?>
 
-                        <?php
+                                <?php
 
-                        /*
-                         * Include the Post-Format-specific template for the content.
-                         * If you want to override this in a child theme, then include a file
-                         * called content-___.php (where ___ is the Post Format name) and that will be used instead.
-                         */
+                                /*
+                                 * Include the Post-Format-specific template for the content.
+                                 * If you want to override this in a child theme, then include a file
+                                 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
+                                 */
 
-                        include plugin_dir_path(__FILE__) . 'loop-templates/content-event.php';
-                        ?>
+                                include plugin_dir_path(__FILE__) . 'loop-templates/content-event.php';
+                                ?>
 
-                    <?php endwhile; ?>
+                            <?php endwhile; ?>
+                        </div>
 
-                <?php else : ?>
+                    <?php else : ?>
 
-                    <p>Vi kunde inte hitta något i kalendern...</p>
+                        <p>Vi kunde inte hitta något i kalendern...</p>
 
-                <?php endif; ?>
+                    <?php endif; ?>
+                </div>
 
             </div> <!-- .row -->
 
